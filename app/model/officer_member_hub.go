@@ -1,6 +1,6 @@
 package model
 
-type OfficerHubMember struct {	
+type OfficerMemberHub struct {	
 	MemberID  string `gorm:"type:varchar(50);not null"`
 	OfficerID string `gorm:"type:varchar(50);not null"`
 	Member    Member `gorm:"foreignKey:MemberID;references:ID"`
@@ -8,6 +8,6 @@ type OfficerHubMember struct {
 	DateTime
 }
 
-func (OfficerHubMember) TableName() string {
-	return "officer_hub_members"
+func (OfficerMemberHub) TableName() string {
+	return "officer_member_hubs"
 }

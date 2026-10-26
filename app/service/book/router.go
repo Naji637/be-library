@@ -10,9 +10,9 @@ func Router(g *gin.RouterGroup, db *gorm.DB) {
 	service_ := NewService(repository)
 	route := g.Group("/books")
 
-	route.GET("/",func(c *gin.Context) {
-		books:=service_.GetAllBooks()
-		c.JSON(200,books)
+	route.GET("/", func(c *gin.Context) {
+		books := service_.GetAllBooks()
+		c.JSON(200, books)
 	})
 	route.POST("/", func(c *gin.Context) {
 		var request RequestBook
@@ -20,13 +20,11 @@ func Router(g *gin.RouterGroup, db *gorm.DB) {
 			c.JSON(400, gin.H{"error": err.Error()})
 			return
 		}
-
 		err := service_.CreateBook(request)
 		if err != nil {
 			c.JSON(500, gin.H{"error": err.Error()})
 			return
 		}
-
 		c.JSON(201, gin.H{"message": "Created"})
 	})
 
