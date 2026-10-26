@@ -3,9 +3,12 @@ package app
 import (
 	"be-library/app/db"
 	"be-library/app/service/book"
+	"be-library/app/service/borrowing"
 	"be-library/app/service/category"
 	"be-library/app/service/condition"
+	"be-library/app/service/fine"
 	"be-library/app/service/member"
+	"be-library/app/service/officer"
 	"be-library/app/service/shelf"
 	"fmt"
 	"os"
@@ -24,9 +27,12 @@ func Run() {
 	book.Router(api, db_)
 	condition.Router(api, db_)
 	member.Router(api, db_)
-	shelf.Router(api,db_)
+	shelf.Router(api, db_)
+	officer.Router(api, db_)
+	borrowing.Router(api, db_)
+	fine.Router(api, db_)
 	//import your service in here...
-port := "8080"
+	port := "8080"
 	if os.Getenv("PORT") != "" {
 		port = os.Getenv("PORT")
 	}

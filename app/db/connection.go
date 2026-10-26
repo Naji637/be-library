@@ -29,6 +29,7 @@ func init() {
 	err := db.AutoMigrate(
 		model.Book{},
 		model.BookHub{},
+		model.Borrowing{},
 	)
 
 	if err != nil {

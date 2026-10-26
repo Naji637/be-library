@@ -1,6 +1,6 @@
 @host=http://localhost:8080
 
-POST {{host}}/api/category
+POST {{host}}/api/categories
 Content-Type: application/json
 
 {
@@ -9,12 +9,12 @@ Content-Type: application/json
 ###
 GET {{host}}/api/conditions
 ###
-POST {{host}}/api/book
+POST {{host}}/api/books
 Content-Type: application/json
 
 {
   "title":"bumi",
-  "category_id":"9a1658db-f617-4adc-a1d0-7cb4d5518775",
+  "category_id":"fb975993-6679-4e62-8a43-90816e7910e0",
   "stock":1,
   "author":"tere liye"
 }
@@ -33,4 +33,13 @@ Content-Type: application/json
   "": "",
   "name": "jecki",
   "alumni": false
+}
+###
+POST {{host}}/api/officers
+Content-Type: application/json
+
+{
+  "name": "jeki",
+  "username": "j",
+  "password": false
 }
