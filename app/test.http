@@ -1,0 +1,36 @@
+@host=http://localhost:8080
+
+POST {{host}}/api/category
+Content-Type: application/json
+
+{
+  "category": "Fiction"
+}
+###
+GET {{host}}/api/conditions
+###
+POST {{host}}/api/book
+Content-Type: application/json
+
+{
+  "title":"bumi",
+  "category_id":"9a1658db-f617-4adc-a1d0-7cb4d5518775",
+  "stock":1,
+  "author":"tere liye"
+}
+###
+POST {{host}}/api/conditions
+Content-Type: application/json
+
+{
+  "condition": "Good"
+}
+###
+POST {{host}}/api/conditions
+Content-Type: application/json
+
+{
+  "": "",
+  "name": "jecki",
+  "alumni": false
+}
