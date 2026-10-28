@@ -55,4 +55,10 @@ Content-Type: application/json
 }
 ###
 DELETE {{host}}/api/books/cde82a3f-0926-4000-8973-8323de1435a5
+###
+POST {{host}}/api/shelves
+Content-Type: application/json
 
+{
+  "shelf_number":"S001"
+}
