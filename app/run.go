@@ -21,8 +21,15 @@ func Run() {
 	db_ := db.Connection()
 	router := gin.Default()
 	router.SetTrustedProxies(nil)
-	router.Use(cors.Default())
+	config := cors.DefaultConfig()
+	config.AllowOrigins = []string{"*"}
+	config.AllowMethods = []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}
+	config.AllowHeaders = []string{"Authorization", "Content-Type"}
+	config.ExposeHeaders = []string{"Content-Length"}
+	config.AllowCredentials = false
+	router.Use(cors.New(config))
 	api := router.Group("/api")
+	
 	category.Router(api, db_)
 	book.Router(api, db_)
 	condition.Router(api, db_)
@@ -32,7 +39,7 @@ func Run() {
 	borrowing.Router(api, db_)
 	fine.Router(api, db_)
 	//import your service in here...
-	port := "8080"
+port := "8080"
 	if os.Getenv("PORT") != "" {
 		port = os.Getenv("PORT")
 	}

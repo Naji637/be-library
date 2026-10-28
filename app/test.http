@@ -7,16 +7,16 @@ Content-Type: application/json
   "category": "Fiction"
 }
 ###
-GET {{host}}/api/conditions
+GET {{host}}/api/books
 ###
 POST {{host}}/api/books
 Content-Type: application/json
 
 {
-  "title":"bumi",
-  "category_id":"fb975993-6679-4e62-8a43-90816e7910e0",
+  "title":"Matahari",
+  "category_id":"61573f66-96e6-46e4-9e1e-a2157c75dcf3",
   "stock":1,
-  "author":"tere liye"
+  "author":"Tere Liye"
 }
 ###
 POST {{host}}/api/conditions
@@ -43,3 +43,16 @@ Content-Type: application/json
   "username": "j",
   "password": false
 }
+###
+PUT {{host}}/api/books/cde82a3f-0926-4000-8973-8323de1435a5
+Content-Type: application/json
+
+{
+  "title":"Matahari2",
+  "category_id":"61573f66-96e6-46e4-9e1e-a2157c75dcf3",
+  "stock":10,
+  "author":"Tere Liye"
+}
+###
+DELETE {{host}}/api/books/cde82a3f-0926-4000-8973-8323de1435a5
+

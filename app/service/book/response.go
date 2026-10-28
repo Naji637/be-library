@@ -1,6 +1,8 @@
 package book
 
-import "be-library/app/model"
+import (
+	"be-library/app/model"
+)
 
 type ResponseBook struct {
 	model.BaseModel
@@ -8,6 +10,7 @@ type ResponseBook struct {
 	CategoryId string `json:"category_id" binding:"required"`
 	Stock      int    `json:"stock" binding:"required"`
 	Author     string `json:"author" binding:"required"`
+	model.DateTime
 }
 
 func (ResponseBook) TableName() string {
