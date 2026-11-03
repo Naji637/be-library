@@ -29,3 +29,7 @@ func (r *repository) GetAllMembers() []ResponseMember {
 	r.db.Find(&members)
 	return members
 }
+
+// func (r *repository) GetMaxMembershipNumber()int{
+
+// }

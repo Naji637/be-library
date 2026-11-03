@@ -8,7 +8,7 @@ import (
 func Router(g *gin.RouterGroup, db *gorm.DB) {
 	//repository := NewRepository(db)
 	//service_ := NewService(repository)
-	//route := g.Group("/officer_member_hub")
+	//route := g.Group("/officer-member-hubs")
 
 	//route.GET("",)
 

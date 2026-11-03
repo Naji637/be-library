@@ -1,13 +1,17 @@
 package member
 
 import (
+	util "be-library/app/util/member"
+
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
 
 func Router(g *gin.RouterGroup, db *gorm.DB) {
 	repository := NewRepository(db)
-	service_ := NewService(repository)
+	memberRepo := util.NewRepository(db)
+	member := util.NewMember(memberRepo)
+	service_ := NewService(repository, member)
 	route := g.Group("/members")
 
 	route.GET("", func(c *gin.Context) {

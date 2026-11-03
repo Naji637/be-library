@@ -8,7 +8,7 @@ import (
 func Router(g *gin.RouterGroup, db *gorm.DB) {
 	repository := NewRepository(db)
 	service_ := NewService(repository)
-	route := g.Group("/book_hubs")
+	route := g.Group("/book-hubs")
 
 	route.GET("", func(c *gin.Context) {
 		bookHubs := service_.GetAllBookHubs()

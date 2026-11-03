@@ -62,3 +62,20 @@ Content-Type: application/json
 {
   "shelf_number":"S001"
 }
+###
+POST {{host}}/api/member-classifications
+Content-Type: application/json
+
+{
+  "classification":"Guru",
+  "max_books":5,
+  "max_days":14
+}
+###
+POST {{host}}/api/members
+Content-Type: application/json
+
+{
+  "name":"naji",
+  "alumni":true
+}

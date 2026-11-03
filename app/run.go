@@ -8,6 +8,7 @@ import (
 	"be-library/app/service/condition"
 	"be-library/app/service/fine"
 	"be-library/app/service/member"
+	"be-library/app/service/member_classification"
 	"be-library/app/service/officer"
 	"be-library/app/service/shelf"
 	"fmt"
@@ -29,7 +30,9 @@ func Run() {
 	config.AllowCredentials = false
 	router.Use(cors.New(config))
 	api := router.Group("/api")
-	
+
+
+
 	category.Router(api, db_)
 	book.Router(api, db_)
 	condition.Router(api, db_)
@@ -37,6 +40,7 @@ func Run() {
 	shelf.Router(api, db_)
 	officer.Router(api, db_)
 	borrowing.Router(api, db_)
+	member_classification.Router(api, db_)
 	fine.Router(api, db_)
 	//import your service in here...
 port := "8080"

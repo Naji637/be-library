@@ -30,6 +30,8 @@ func init() {
 		model.Book{},
 		model.BookHub{},
 		model.Borrowing{},
+		model.MemberClassification{},
+		model.Membership{},
 	)
 
 	if err != nil {

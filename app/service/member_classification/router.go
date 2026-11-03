@@ -8,7 +8,7 @@ import (
 func Router(g *gin.RouterGroup, db *gorm.DB) {
 	repository := NewRepository(db)
 	service_ := NewService(repository)
-	route := g.Group("/member_classifications")
+	route := g.Group("/member-classifications")
 
 	route.GET("",func(c *gin.Context) {
 		memberClassification:=service_.GetAllMemberClassifications()
