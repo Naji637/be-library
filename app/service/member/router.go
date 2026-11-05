@@ -1,7 +1,10 @@
 package member
 
 import (
+<<<<<<< HEAD
 	"be-library/app/service/member_classification_hub"
+=======
+>>>>>>> origin/main
 	util "be-library/app/util/member"
 
 	"github.com/gin-gonic/gin"
@@ -12,8 +15,12 @@ func Router(g *gin.RouterGroup, db *gorm.DB) {
 	repository := NewRepository(db)
 	memberRepo := util.NewRepository(db)
 	member := util.NewMember(memberRepo)
+<<<<<<< HEAD
 	mchRepo := member_classification_hub.NewRepository(db)
 	service_ := NewService(repository, member, mchRepo)
+=======
+	service_ := NewService(repository, member)
+>>>>>>> origin/main
 	route := g.Group("/members")
 
 	route.GET("", func(c *gin.Context) {
@@ -35,6 +42,7 @@ func Router(g *gin.RouterGroup, db *gorm.DB) {
 
 		c.JSON(201, gin.H{"message": "Created"})
 	})
+<<<<<<< HEAD
 	route.PUT("/:id", func(c *gin.Context) {
 		var request RequestMember
 		if err := c.ShouldBindJSON(&request); err != nil {
@@ -58,4 +66,7 @@ func Router(g *gin.RouterGroup, db *gorm.DB) {
 		}
 		c.JSON(201, gin.H{"message": "Deleted"})
 	})
+=======
+
+>>>>>>> origin/main
 }

@@ -7,10 +7,15 @@ import (
 )
 
 type Repository interface {
+<<<<<<< HEAD
 	CreateMember(member *model.Member) (*model.Member, error)
 	GetAllMembers() []ResponseMember
 	UpdateMember(member *model.Member, id string) error
 	DeleteMember(id string) error
+=======
+	CreateMember(member *model.Member) error
+	GetAllMembers() []ResponseMember
+>>>>>>> origin/main
 }
 
 type repository struct {
@@ -21,9 +26,15 @@ func NewRepository(db *gorm.DB) *repository {
 	return &repository{db}
 }
 
+<<<<<<< HEAD
 func (r *repository) CreateMember(member *model.Member) (*model.Member, error) {
 	err := r.db.Create(member).Error
 	return member, err
+=======
+func (r *repository) CreateMember(member *model.Member) error {
+	err := r.db.Create(member).Error
+	return err
+>>>>>>> origin/main
 }
 
 func (r *repository) GetAllMembers() []ResponseMember {
@@ -32,6 +43,7 @@ func (r *repository) GetAllMembers() []ResponseMember {
 	return members
 }
 
+<<<<<<< HEAD
 func (r *repository) UpdateMember(member *model.Member, id string) error {
 	return r.db.Model(&model.Member{}).Where("id=?", id).Updates(map[string]interface{}{"name": member.Name, "alumni": member.Alumni}).Error
 }
@@ -39,3 +51,8 @@ func (r *repository) UpdateMember(member *model.Member, id string) error {
 func (r *repository) DeleteMember(id string) error {
 	return r.db.Where("id=?", id).Delete(&model.Member{}).Error
 }
+=======
+// func (r *repository) GetMaxMembershipNumber()int{
+
+// }
+>>>>>>> origin/main

@@ -32,7 +32,10 @@ func init() {
 		model.Borrowing{},
 		model.MemberClassification{},
 		model.Membership{},
+<<<<<<< HEAD
 		model.MemberClassificationHub{},
+=======
+>>>>>>> origin/main
 	)
 
 	if err != nil {

@@ -1,15 +1,21 @@
 package member_classification_hub
 
 import (
+<<<<<<< HEAD
 	"be-library/app/model"
+=======
+>>>>>>> origin/main
 
 	"gorm.io/gorm"
 )
 
 type Repository interface {
+<<<<<<< HEAD
 	CreateMemberClassificationHub(mch *model.MemberClassificationHub) error
 	UpdateMemberClassificationHub(memberClassificationId string, memberId string) error
 	DeleteMemberClassificationHub(memberId string) error
+=======
+>>>>>>> origin/main
 }
 
 type repository struct {
@@ -20,6 +26,7 @@ func NewRepository(db *gorm.DB) *repository {
 	return &repository{db}
 }
 
+<<<<<<< HEAD
 func (r *repository) CreateMemberClassificationHub(mch *model.MemberClassificationHub) error {
 	return r.db.Create(mch).Error
 }
@@ -31,3 +38,5 @@ func (r *repository) UpdateMemberClassificationHub(memberClassificationId string
 func (r *repository) DeleteMemberClassificationHub(memberId string) error {
 	return r.db.Where("member_id=?", memberId).Delete(&model.MemberClassificationHub{}).Error
 }
+=======
+>>>>>>> origin/main
