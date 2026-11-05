@@ -7,10 +7,7 @@ type ResponseMember struct {
 	MembershipNumber string `json:"membership_number" binding:"required"`
 	Name             string `json:"name" binding:"required"`
 	Alumni           bool   `json:"alumni" binding:"required"`
-<<<<<<< HEAD
 	model.DateTime
-=======
->>>>>>> origin/main
 }
 
 func (ResponseMember) TableName() string {
