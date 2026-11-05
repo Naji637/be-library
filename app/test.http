@@ -1,0 +1,81 @@
+@host=http://localhost:8080
+
+POST {{host}}/api/categories
+Content-Type: application/json
+
+{
+  "category": "Fiction"
+}
+###
+GET {{host}}/api/books
+###
+POST {{host}}/api/books
+Content-Type: application/json
+
+{
+  "title":"Matahari",
+  "category_id":"61573f66-96e6-46e4-9e1e-a2157c75dcf3",
+  "stock":1,
+  "author":"Tere Liye"
+}
+###
+POST {{host}}/api/conditions
+Content-Type: application/json
+
+{
+  "condition": "Good"
+}
+###
+POST {{host}}/api/conditions
+Content-Type: application/json
+
+{
+  "": "",
+  "name": "jecki",
+  "alumni": false
+}
+###
+POST {{host}}/api/officers
+Content-Type: application/json
+
+{
+  "name": "jeki",
+  "username": "j",
+  "password": false
+}
+###
+PUT {{host}}/api/books/cde82a3f-0926-4000-8973-8323de1435a5
+Content-Type: application/json
+
+{
+  "title":"Matahari2",
+  "category_id":"61573f66-96e6-46e4-9e1e-a2157c75dcf3",
+  "stock":10,
+  "author":"Tere Liye"
+}
+###
+DELETE {{host}}/api/books/cde82a3f-0926-4000-8973-8323de1435a5
+###
+POST {{host}}/api/shelves
+Content-Type: application/json
+
+{
+  "shelf_number":"S001"
+}
+###
+POST {{host}}/api/member-classifications
+Content-Type: application/json
+
+{
+  "classification":"Guru",
+  "max_books":5,
+  "max_days":14
+}
+###
+POST {{host}}/api/members
+Content-Type: application/json
+
+{
+  "name":"naji",
+  "alumni":true
+}
