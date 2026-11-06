@@ -1,6 +1,8 @@
 package book
 
 import (
+	"be-library/app/service/book_hub"
+	util "be-library/app/util/barcode"
 	"fmt"
 
 	"github.com/gin-gonic/gin"
@@ -9,7 +11,10 @@ import (
 
 func Router(g *gin.RouterGroup, db *gorm.DB) {
 	repository := NewRepository(db)
-	service_ := NewService(repository)
+	barcodeRepo := util.NewRepository(db)
+	barcode := util.NewBarcode(barcodeRepo)
+	bookHubRepo := book_hub.NewRepository(db)
+	service_ := NewService(repository, barcode, bookHubRepo)
 	route := g.Group("/books")
 
 	route.GET("", func(c *gin.Context) {
@@ -52,5 +57,19 @@ func Router(g *gin.RouterGroup, db *gorm.DB) {
 			return
 		}
 		c.JSON(201, gin.H{"message": "Deleted"})
+	})
+	route.POST("/barcode", func(c *gin.Context) {
+		var request RequestBarcode
+		if err := c.ShouldBindJSON(&request); err != nil {
+			c.JSON(400, gin.H{"error": err.Error()})
+			fmt.Println("uhhhyy", err.Error())
+			return
+		}
+		err := service_.CreateBarcode(request)
+		if err != nil {
+			c.JSON(500, gin.H{"error": err.Error()})
+			return
+		}
+		c.JSON(201, gin.H{"message": "Created"})
 	})
 }

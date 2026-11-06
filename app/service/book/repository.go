@@ -2,6 +2,7 @@ package book
 
 import (
 	"be-library/app/model"
+	// "be-library/app/service/book"
 
 	"gorm.io/gorm"
 )
@@ -11,6 +12,8 @@ type Repository interface {
 	GetAllBooks() []ResponseBook
 	UpdateBook(book *model.Book, id string) error
 	DeleteBook(id string) error
+	UpdateStock(bookId string, stock int) error
+	GetBookById(id string) model.Book
 }
 
 type repository struct {
@@ -27,7 +30,7 @@ func (r *repository) CreateBook(book *model.Book) error {
 
 func (r *repository) GetAllBooks() []ResponseBook {
 	var books []ResponseBook
-	r.db.Debug().Find(&books)
+	r.db.Find(&books)
 	return books
 }
 
@@ -36,6 +39,14 @@ func (r *repository) UpdateBook(book *model.Book, id string) error {
 }
 
 func (r *repository) DeleteBook(id string) error {
-	
-	return r.db.Debug().Where("id=?", id).Delete(&model.Book{}).Error
+
+	return r.db.Where("id=?", id).Delete(&model.Book{}).Error
+}
+func (r *repository) UpdateStock(bookId string, stock int) error {
+	return r.db.Model(&model.Book{}).Where("id=?", bookId).Updates(map[string]interface{}{"stock": stock}).Error
+}
+func (r *repository) GetBookById(id string) model.Book {
+	var book model.Book
+	r.db.Where("id=?", id).Find(&book)
+	return book
 }

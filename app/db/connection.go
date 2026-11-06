@@ -32,6 +32,7 @@ func init() {
 		model.Borrowing{},
 		model.MemberClassification{},
 		model.Membership{},
+		model.Barcode{},
 		model.MemberClassificationHub{},
 	)
 

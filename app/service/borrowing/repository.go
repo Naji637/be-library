@@ -8,7 +8,7 @@ import (
 
 type Repository interface {
 	CreateBorrowing(borrowing *model.Borrowing) error
-	GetAllBorrowing() []ResponseBorrowing
+	// GetAllBorrowing() []ResponseBorrowing
 }
 
 type repository struct {
@@ -24,8 +24,8 @@ func (r *repository) CreateBorrowing(borrowing *model.Borrowing) error {
 	return err
 }
 
-func (r *repository) GetAllBorrowing() []ResponseBorrowing {
-	var borrowings []ResponseBorrowing
-	r.db.Find(&borrowings)
-	return borrowings
-}
+// func (r *repository) GetAllBorrowing() []ResponseBorrowing {
+// 	var borrowings []ResponseBorrowing
+// 	r.db.Find(&borrowings)
+// 	return borrowings
+// }

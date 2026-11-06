@@ -29,3 +29,7 @@ func (r *repository) GetAllBookHubs() []ResponseBookHub {
 	r.db.Find(&bookHub)
 	return bookHub
 }
+
+// func (r *repository) GetBookHubByBarcode(barcode string) model.BookHub {
+// 	var bookHub ResponseBookHub
+// }
