@@ -24,6 +24,13 @@ func (r *repository) CreateBorrowing(borrowing *model.Borrowing) error {
 	return err
 }
 
+// func (r *repository) GetBorrowedBooksByMemberId(memberId string) (ResponseJoinBorrowingToBooks, error) {
+// 	var borrowedBooks ResponseJoinBorrowingToBooks
+//
+// 	query :=
+// 		`select br.id,b.title,br.borrow_date,bh.condition as `
+// }
+
 // func (r *repository) GetAllBorrowing() []ResponseBorrowing {
 // 	var borrowings []ResponseBorrowing
 // 	r.db.Find(&borrowings)

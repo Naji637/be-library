@@ -11,6 +11,7 @@ type Repository interface {
 	GetAllMembers() []ResponseMember
 	UpdateMember(member *model.Member, id string) error
 	DeleteMember(id string) error
+	JoinMembersToMemberClassifications(membershpNumber string) (*ResponseJoinMembersToMemberClassifications, error)
 }
 
 type repository struct {
@@ -38,4 +39,19 @@ func (r *repository) UpdateMember(member *model.Member, id string) error {
 
 func (r *repository) DeleteMember(id string) error {
 	return r.db.Where("id=?", id).Delete(&model.Member{}).Error
+}
+
+func (r *repository) JoinMembersToMemberClassifications(membershpNumber string) (*ResponseJoinMembersToMemberClassifications, error) {
+	var mch ResponseJoinMembersToMemberClassifications
+
+	query := `
+			SELECT m.id, m.membership_number, m.name, mc.max_books, mc.max_days
+			FROM members AS m
+			INNER JOIN member_classification_hubs AS mch ON m.id = mch.member_id
+			INNER JOIN member_classifications AS mc ON mc.id = mch.member_classification_id
+			WHERE m.membership_number = ?`
+	if err := r.db.Raw(query, membershpNumber).Scan(mch).Error; err != nil {
+		return nil, err
+	}
+	return &mch, nil
 }

@@ -19,7 +19,6 @@ type Borrowing struct {
 	ReturnOfficer     Officer   `gorm:"foreignKey:ReturnOfficerId;references:ID"`
 	BorrowCondition   Condition `gorm:"foreignKey:BorrowConditionId;references:ID"`
 	ReturnCondition   Condition `gorm:"foreignKey:ReturnConditionId;references:ID"`
-
 	DateTime
 }
 
