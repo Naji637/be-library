@@ -9,6 +9,7 @@ import (
 type Repository interface {
 	CreateCategory(category *model.Category) error
 	GetAllCategories() []ResponseCategory
+	GetCategorById(id string) ResponseCategory
 }
 
 type repository struct {
@@ -25,6 +26,11 @@ func (r *repository) CreateCategory(category *model.Category) error {
 }
 func (r *repository) GetAllCategories() []ResponseCategory {
 	var categories []ResponseCategory
-	r.db.Debug().Find(&categories)
+	r.db.Find(&categories)
 	return categories
+}
+func (r *repository) GetCategorById(id string) ResponseCategory {
+	var category ResponseCategory
+	r.db.Model(model.Category{}).Where("id=?", id).Find(&category)
+	return category
 }

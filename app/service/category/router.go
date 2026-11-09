@@ -25,8 +25,14 @@ func Router(g *gin.RouterGroup, db *gorm.DB) {
 
 		c.JSON(201, gin.H{"message": "Created"})
 	})
-route.GET("",func(c *gin.Context) {
-	categories := service_.GetAllCategories()
-	c.JSON(200,categories)
-})
+	route.GET("", func(c *gin.Context) {
+		categories := service_.GetAllCategories()
+		c.JSON(200, categories)
+	})
+	route.GET("/:id", func(c *gin.Context) {
+		id := c.Param("id")
+		category := service_.GetCategoryById(id)
+		c.JSON(201, category)
+
+	})
 }
