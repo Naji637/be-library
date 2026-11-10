@@ -1,7 +1,9 @@
 package borrowing
 
 import (
+	"be-library/app/service/book_hub"
 	"be-library/app/service/member"
+	"fmt"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
@@ -10,7 +12,8 @@ import (
 func Router(g *gin.RouterGroup, db *gorm.DB) {
 	repository := NewRepository(db)
 	memberRepo := member.NewRepository(db)
-	service_ := NewService(repository, memberRepo)
+	bookHubRepo := book_hub.NewRepository(db)
+	service_ := NewService(repository, memberRepo, bookHubRepo)
 	route := g.Group("/borrowings")
 
 	// route.GET("", func(c *gin.Context) {
@@ -18,27 +21,31 @@ func Router(g *gin.RouterGroup, db *gorm.DB) {
 	// 	c.JSON(200, borrowings)
 	// })
 
-	// 	route.POST("", func(c *gin.Context) {
-	// 		var request RequestBorrowing
-	// 		if err := c.ShouldBindJSON(&request); err != nil {
-	// 			c.JSON(400, gin.H{"error": err.Error()})
-	// 			return
-	// 		}
-	//
-	// 		err := service_.CreateBorrowing(request)
-	// 		if err != nil {
-	// 			c.JSON(500, gin.H{"error": err.Error()})
-	// 			return
-	// 		}
-	//
-	// 		c.JSON(201, gin.H{"message": "Created"})
-	// 	})
+	route.POST("", func(c *gin.Context) {
+		var request RequestBorrowing
+		if err := c.ShouldBindJSON(&request); err != nil {
+			c.JSON(400, gin.H{"error": err.Error()})
+			return
+		}
 
-	route.GET("/:membersip-number", func(c *gin.Context) {
+		err := service_.CreateBorrowing(request)
+		if err != nil {
+			c.JSON(500, gin.H{"error": err.Error()})
+			return
+		}
+
+		c.JSON(201, gin.H{"message": "Created"})
+	})
+
+	route.GET("/:membership-number", func(c *gin.Context) {
 		membershipNumber := c.Param("membership-number")
-
-		borrowing := service_.GetBorrowingsByMembershipNumber(membershipNumber)
-		c.JSON(201, borrowing)
+		fmt.Println("membership number", membershipNumber)
+		borrowing, err := service_.GetBorrowingsByMembershipNumber(membershipNumber)
+		if err != nil {
+			c.JSON(500, gin.H{"message": "ups"})
+			return
+		}
+		c.JSON(200, borrowing)
 
 	})
 }
