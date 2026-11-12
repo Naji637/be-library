@@ -57,9 +57,9 @@ func (ResponseGetMemberBorrowingBooks) TableName() string {
 
 type ResponseBorrowingBooks struct {
 	ID                string                       `json:"id"`
-	MemberId          string                       `json:"member_id"`
-	BookHubId         string                       `json:"book_hub_id"`
-	BorrowConditionId string                       `json:"borrow_condition_id"`
+	MemberId          string                       `json:"-"`
+	BookHubId         string                       `json:"-"`
+	BorrowConditionId string                       `json:"-"`
 	BorrowDate        time.Time                    `json:"borrow_date"`
 	BookHub           ResponseJoinBorrowingBookHub `json:"book_hub" gorm:"foreignKey:ID;references:BookHubId"`
 	Condition         ResponseConditionBook        `json:"condition" gorm:"foreignKey:ID;references:BorrowConditionId"`
@@ -70,8 +70,8 @@ func (ResponseBorrowingBooks) TableName() string {
 }
 
 type ResponseJoinBorrowingBookHub struct {
-	ID     string       `json:"id"`
-	BookId string       `json:"book_id"`
+	ID     string       `json:"-"`
+	BookId string       `json:"-"`
 	Book   ResponseBook `json:"book" gorm:"foreignKey:ID;references:BookId"`
 }
 
@@ -89,7 +89,7 @@ func (ResponseBook) TableName() string {
 }
 
 type ResponseConditionBook struct {
-	ID        string `json:"id"`
+	ID        string `json:"-"`
 	Condition string `json:"condition"`
 }
 
