@@ -13,7 +13,7 @@ type Service interface {
 	CreateBorrowing(borrowing RequestBorrowing) error
 	ReturnBorrowing(borrowingReturn []RequestReturnBorrowing) error
 	// GetAllBorrowing() []ResponseBorrowing
-	// GetBorrowingsByMembershipNumber(membershipNumber string) *ResponseBorrowing
+	GetBorrowingsByMembershipNumber(membershipNumber string) (ResponseGetMemberBorrowingBooks, error)
 }
 
 type service_ struct {
@@ -46,6 +46,9 @@ func (s *service_) CreateBorrowing(borrowing RequestBorrowing) error {
 				return errors.New("ups")
 			}
 		}
+
+	} else {
+		return errors.New("melebihi batas pinjam buku")
 	}
 
 	return nil

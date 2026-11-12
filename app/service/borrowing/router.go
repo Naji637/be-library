@@ -26,7 +26,6 @@ func Router(g *gin.RouterGroup, db *gorm.DB) {
 			c.JSON(400, gin.H{"error": err.Error()})
 			return
 		}
-
 		err := service_.CreateBorrowing(request)
 		if err != nil {
 			c.JSON(500, gin.H{"error": err.Error()})
