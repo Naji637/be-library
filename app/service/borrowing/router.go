@@ -1,6 +1,7 @@
 package borrowing
 
 import (
+	"be-library/app/service/book"
 	"be-library/app/service/book_hub"
 	"be-library/app/service/member"
 
@@ -12,7 +13,8 @@ func Router(g *gin.RouterGroup, db *gorm.DB) {
 	repository := NewRepository(db)
 	memberRepo := member.NewRepository(db)
 	bookHubRepo := book_hub.NewRepository(db)
-	service_ := NewService(repository, memberRepo, bookHubRepo)
+	bookRepo := book.NewRepository(db)
+	service_ := NewService(repository, memberRepo, bookHubRepo, bookRepo)
 	route := g.Group("/borrowings")
 
 	// route.GET("", func(c *gin.Context) {

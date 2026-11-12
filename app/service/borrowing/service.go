@@ -2,6 +2,7 @@ package borrowing
 
 import (
 	"be-library/app/model"
+	"be-library/app/service/book"
 	"be-library/app/service/book_hub"
 	"be-library/app/service/member"
 	"errors"
@@ -20,17 +21,38 @@ type service_ struct {
 	repository  Repository
 	memberRepo  member.Repository
 	bookHubRepo book_hub.Repository
+	bookRepo    book.Repository
 }
 
-func NewService(repository Repository, memberRepo member.Repository, bookHubRepo book_hub.Repository) *service_ {
-	return &service_{repository, memberRepo, bookHubRepo}
+func NewService(repository Repository, memberRepo member.Repository, bookHubRepo book_hub.Repository, bookRepo book.Repository) *service_ {
+	return &service_{repository, memberRepo, bookHubRepo, bookRepo}
 }
 func (s *service_) CreateBorrowing(borrowing RequestBorrowing) error {
 	memberClassification, _ := s.memberRepo.JoinMembersToMemberClassifications(borrowing.MemberId)
 	if len(borrowing.Books) <= memberClassification.MaxBooks {
 		borrowedBooks, _ := s.GetBorrowingsByMembershipNumber(memberClassification.MembershipNumber)
-		for _, borrowingBooks := range borrowing.Books {
+		for i, borrowingBooks := range borrowing.Books {
 			bookHub, err := s.bookHubRepo.GetBookHubById(borrowingBooks.BookHubId)
+			nonAvailableBooks, _ := s.repository.BorrowedBooks(bookHub.BookID)
+
+			totalStock := s.bookRepo.GetBookById(bookHub.BookID)
+
+			stock := totalStock.Stock - nonAvailableBooks
+			if stock <= 0 {
+				return errors.New("stock habis")
+			}
+			if err != nil {
+				log.Println(err)
+				return errors.New("ups")
+			}
+			for j, otherRequestBook := range borrowing.Books {
+				if i != j {
+					otherBookHub, err := s.bookHubRepo.GetBookHubById(otherRequestBook.BookHubId)
+					if err == nil && otherBookHub.BookID == bookHub.BookID {
+						return errors.New("tidak boleh meminjam judul buku yang sama dalam satu request")
+					}
+				}
+			}
 			for _, responseBooks := range borrowedBooks.Borrowing {
 				if responseBooks.BookHub.BookId == bookHub.BookID {
 					return errors.New("buku yang dipinjam tidak boleh sama")
