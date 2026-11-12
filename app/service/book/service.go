@@ -41,7 +41,6 @@ func (s *service_) DeleteBook(id string) error {
 }
 func (s *service_) CreateBarcode(requestBarcode RequestBarcode) error {
 	barcode := s.barcode.CreateBarcode()
-	fmt.Println("barcode", barcode)
 	var err error
 	if barcode != "" {
 		if err = s.repositoryBookHub.CreateBookHub(&model.BookHub{
@@ -53,7 +52,6 @@ func (s *service_) CreateBarcode(requestBarcode RequestBarcode) error {
 			Price:       requestBarcode.Price,
 		}); err == nil {
 			book := s.repository.GetBookById(requestBarcode.BookId)
-			fmt.Println("book", book)
 			if err = s.repository.UpdateStock(requestBarcode.BookId, book.Stock+1); err == nil {
 				return nil
 			}

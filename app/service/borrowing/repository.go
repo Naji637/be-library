@@ -8,7 +8,8 @@ import (
 
 type Repository interface {
 	CreateBorrowing(borrowing *model.Borrowing) error
-	GetBorrowedBooksByMemberId(membershipNumber string) (ResponseGetMemberBorrowingBooks, error)
+	GetBorrowedBooksByMembershipNumber(membershipNumber string) (ResponseGetMemberBorrowingBooks, error)
+	ReturnBorrowing(id string, borrowingReturn *model.Borrowing) error
 	// GetAllBorrowing() []ResponseBorrowing
 }
 
@@ -25,13 +26,22 @@ func (r *repository) CreateBorrowing(borrowing *model.Borrowing) error {
 	return err
 }
 
-func (r *repository) GetBorrowedBooksByMemberId(membershipNumber string) (ResponseGetMemberBorrowingBooks, error) {
+func (r *repository) GetBorrowedBooksByMembershipNumber(membershipNumber string) (ResponseGetMemberBorrowingBooks, error) {
 	var borrowedBooks ResponseGetMemberBorrowingBooks
 	err := r.db.Debug().Preload("Borrowing", func(db *gorm.DB) *gorm.DB {
 		return db.Joins("BookHub.Book").Joins("Condition")
 	}).Where("membership_number=?", membershipNumber).Find(&borrowedBooks).Error
 	return borrowedBooks, err
 }
+
+func (r *repository) ReturnBorrowing(id string, borrowingReturn *model.Borrowing) error {
+	err := r.db.Model(&model.Borrowing{}).Where("id=?", id).Updates(&borrowingReturn).Error
+	return err
+}
+
+// func (r *repository) BorrowedBooks(bookId string) {
+//
+// }
 
 // func (r *repository) GetAllBorrowing() []ResponseBorrowing {
 // 	var borrowings []ResponseBorrowing

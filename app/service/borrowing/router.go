@@ -3,7 +3,6 @@ package borrowing
 import (
 	"be-library/app/service/book_hub"
 	"be-library/app/service/member"
-	"fmt"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
@@ -39,13 +38,27 @@ func Router(g *gin.RouterGroup, db *gorm.DB) {
 
 	route.GET("/:membership-number", func(c *gin.Context) {
 		membershipNumber := c.Param("membership-number")
-		fmt.Println("membership number", membershipNumber)
 		borrowing, err := service_.GetBorrowingsByMembershipNumber(membershipNumber)
 		if err != nil {
 			c.JSON(500, gin.H{"message": "ups"})
 			return
 		}
 		c.JSON(200, borrowing)
+
+	})
+	route.PUT("", func(c *gin.Context) {
+		var request []RequestReturnBorrowing
+		if err := c.ShouldBindJSON(&request); err != nil {
+			c.JSON(400, gin.H{"message": "ups"})
+			return
+		}
+
+		err := service_.ReturnBorrowing(request)
+		if err != nil {
+			c.JSON(500, gin.H{"message": "ups"})
+			return
+		}
+		c.JSON(201, gin.H{"message": "updated"})
 
 	})
 }
