@@ -1,6 +1,7 @@
 package borrowing
 
 import (
+	"be-library/app/model"
 	"time"
 )
 
@@ -95,4 +96,14 @@ type ResponseConditionBook struct {
 
 func (ResponseConditionBook) TableName() string {
 	return "conditions"
+}
+
+type ResponseJoinBookHubToBook struct {
+	model.BaseModel
+	Title     string `json:"title"`
+	Condition string `json:"condition"`
+}
+
+func (ResponseJoinBookHubToBook) TableName() string {
+	return "book_hubs"
 }

@@ -27,4 +27,5 @@ func Router(g *gin.RouterGroup, db *gorm.DB) {
 		}
 		c.JSON(201, gin.H{"message": "Created"})
 	})
+
 }

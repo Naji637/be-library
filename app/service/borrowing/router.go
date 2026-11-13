@@ -35,7 +35,7 @@ func Router(g *gin.RouterGroup, db *gorm.DB) {
 		c.JSON(201, gin.H{"message": "Created"})
 	})
 
-	route.GET("/:membership-number", func(c *gin.Context) {
+	route.GET("/membership/:membership-number", func(c *gin.Context) {
 		membershipNumber := c.Param("membership-number")
 		borrowing, err := service_.GetBorrowingsByMembershipNumber(membershipNumber)
 		if err != nil {
@@ -59,5 +59,14 @@ func Router(g *gin.RouterGroup, db *gorm.DB) {
 		}
 		c.JSON(201, gin.H{"message": "updated"})
 
+	})
+	route.GET("/barcode/:barcode", func(c *gin.Context) {
+		barcode := c.Param("barcode")
+		book, err := service_.GetBookByBarcode(barcode)
+		if err != nil {
+			c.JSON(500, gin.H{"error": "ups"})
+			return
+		}
+		c.JSON(200, book)
 	})
 }

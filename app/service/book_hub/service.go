@@ -5,6 +5,7 @@ import "be-library/app/model"
 type Service interface {
 	CreateBookHub(bookHub RequestBookHub) error
 	GetAllBookHubs() []ResponseBookHub
+	// GetBookByBarcode(barcode string) (ResponseJoinBookHubToBook, error)
 }
 
 type service_ struct {

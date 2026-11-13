@@ -12,6 +12,6 @@ type ResponseBookHub struct {
 	Price       float64 `json:"price" binding:"required"`
 }
 
-func (ResponseBookHub) TableName()string{
+func (ResponseBookHub) TableName() string {
 	return "book_hubs"
 }

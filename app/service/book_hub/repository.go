@@ -11,6 +11,7 @@ type Repository interface {
 	GetAllBookHubs() []ResponseBookHub
 	GetBookHubById(id string) (model.BookHub, error)
 	UpdateBookHubCondition(id string, conditionId string) error
+	GetBookHubsIdByBookId(bookId string) []model.BookHub
 }
 
 type repository struct {
@@ -41,6 +42,11 @@ func (r *repository) GetBookHubById(id string) (model.BookHub, error) {
 func (r *repository) UpdateBookHubCondition(id string, conditionId string) error {
 	err := r.db.Model(&model.BookHub{}).Where("id=?", id).Updates(map[string]interface{}{"condition_id": conditionId}).Error
 	return err
+}
+func (r *repository) GetBookHubsIdByBookId(bookId string) []model.BookHub {
+	var bookHubs []model.BookHub
+	r.db.Where("book_id=?", bookId).Find(&bookHubs)
+	return bookHubs
 }
 
 // func (r *repository) GetBookIdByBookHubId(bookHubId string) model.BookHub {
