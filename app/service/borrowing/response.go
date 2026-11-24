@@ -96,3 +96,10 @@ type ResponseConditionBook struct {
 func (ResponseConditionBook) TableName() string {
 	return "conditions"
 }
+
+type BookHubForBorrowing struct {
+	ID          string
+	BookId      string
+	ConditionId string
+	IsBorrowed  bool
+}
