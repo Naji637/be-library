@@ -41,23 +41,17 @@ func (r *repository) DeleteMember(id string) error {
 	return r.db.Where("id=?", id).Delete(&model.Member{}).Error
 }
 
-// func (r *repository) JoinMembersToMemberClassifications(memberId string) (ResponseJoinMembersToMemberClassifications, error) {
-// 	var memberClassificationHub ResponseJoinMembersToMemberClassifications
-// 	err := r.db.Debug().Preload("MemberClassificationHub", func(db *gorm.DB) *gorm.DB {
-// 		return db.Joins("Member").Joins("MemberClassification")
-// 	}).Where("member_id=?", memberId).Find(&memberClassificationHub).Error
-// 	return memberClassificationHub, err
-// }
+func (r *repository) JoinMembersToMemberClassifications(memberId string) (*ResponseJoinMembersToMemberClassifications, error) {
+	var mch ResponseJoinMembersToMemberClassifications
 
-func (r *repository) JoinMembersToMemberClassifications(memberId string) (ResponseJoinMembersToMemberClassifications, error) {
-	var memberClassificationHub ResponseJoinMembersToMemberClassifications
-
-	err := r.db.Table("member_classification_hubs").
-		Select("member_classification_hubs.*, members.*, member_classifications.*").
-		Joins("join members on members.id = member_classification_hubs.member_id").
-		Joins("join member_classifications on member_classifications.id = member_classification_hubs.member_classification_id").
-		Where("member_classification_hubs.member_id = ?", memberId).
-		Scan(&memberClassificationHub).Error
-
-	return memberClassificationHub, err
+	query := `
+			SELECT m.id, m.membership_number, m.name, mc.max_books, mc.max_days
+			FROM members AS m
+			INNER JOIN member_classification_hubs AS mch ON m.id = mch.member_id
+			INNER JOIN member_classifications AS mc ON mc.id = mch.member_classification_id
+			WHERE m.id = ?`
+	if err := r.db.Raw(query, memberId).Scan(&mch).Error; err != nil {
+		return nil, err
+	}
+	return &mch, nil
 }
