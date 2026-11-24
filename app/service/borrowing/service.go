@@ -2,6 +2,7 @@ package borrowing
 
 import (
 	"be-library/app/model"
+	"be-library/app/service/book"
 	"be-library/app/service/book_hub"
 	"be-library/app/service/member"
 	"errors"
@@ -11,18 +12,20 @@ import (
 
 type Service interface {
 	CreateBorrowing(borrowing RequestBorrowing) error
+	ReturnBorrowing(borrowingReturn []RequestReturnBorrowing) error
 	// GetAllBorrowing() []ResponseBorrowing
-	// GetBorrowingsByMembershipNumber(membershipNumber string) *ResponseBorrowing
+	GetBorrowingsByMembershipNumber(membershipNumber string) (ResponseGetMemberBorrowingBooks, error)
 }
 
 type service_ struct {
 	repository  Repository
 	memberRepo  member.Repository
 	bookHubRepo book_hub.Repository
+	bookRepo    book.Repository
 }
 
-func NewService(repository Repository, memberRepo member.Repository, bookHubRepo book_hub.Repository) *service_ {
-	return &service_{repository, memberRepo, bookHubRepo}
+func NewService(repository Repository, memberRepo member.Repository, bookHubRepo book_hub.Repository, bookRepo book.Repository) *service_ {
+	return &service_{repository, memberRepo, bookHubRepo, bookRepo}
 }
 func (s *service_) CreateBorrowing(borrowing RequestBorrowing) error {
 	bookHubIds, err := uniqueBookHubId(borrowing.Books)

@@ -2,6 +2,7 @@ package borrowing
 
 import (
 	"be-library/app/model"
+	"log"
 
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
@@ -37,7 +38,7 @@ func (r *repository) CreateBorrowing(borrowings []*model.Borrowing) error {
 
 func (r *repository) GetBorrowedBooksByMembershipNumber(membershipNumber string) (ResponseGetMemberBorrowingBooks, error) {
 	var borrowedBooks ResponseGetMemberBorrowingBooks
-	err := r.db.Debug().Preload("Borrowing", func(db *gorm.DB) *gorm.DB {
+	err := r.db.Preload("Borrowing", func(db *gorm.DB) *gorm.DB {
 		return db.Joins("BookHub.Book").Joins("Condition")
 	}).Where("membership_number=?", membershipNumber).Find(&borrowedBooks).Error
 	return borrowedBooks, err

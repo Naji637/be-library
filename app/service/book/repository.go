@@ -14,6 +14,8 @@ type Repository interface {
 	DeleteBook(id string) error
 	UpdateStock(bookId string, stock int) error
 	GetBookById(id string) model.Book
+
+	// GetBookByBarcode(barcode string) model.Book
 }
 
 type repository struct {

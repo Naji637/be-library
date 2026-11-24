@@ -11,7 +11,7 @@ type Repository interface {
 	GetAllMembers() []ResponseMember
 	UpdateMember(member *model.Member, id string) error
 	DeleteMember(id string) error
-	JoinMembersToMemberClassifications(membershpNumber string) (*ResponseJoinMembersToMemberClassifications, error)
+	JoinMembersToMemberClassifications(memberId string) (ResponseJoinMembersToMemberClassifications, error)
 }
 
 type repository struct {
