@@ -10,7 +10,10 @@ type Book struct {
 }
 
 type RequestReturnBorrowing struct {
-	ID                string `json:"id" binding:"required"`
+	MemberId       string          `json:"member_id" binding:"required"`
+	ReturnBookHubs []ReturnBookHub `json:"return_book_hubs" validate:"dive"`
+}
+type ReturnBookHub struct {
 	BookHubId         string `json:"book_hub_id" binding:"required"`
 	ReturnConditionId string `json:"return_condition_id" binding:"required"`
 }

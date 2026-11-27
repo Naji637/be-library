@@ -29,11 +29,16 @@ func Router(g *gin.RouterGroup, db *gorm.DB) {
 			return
 		}
 		err := service_.CreateBorrowing(request)
+		// fmt.Println(err)
 		if err != nil {
-			c.JSON(500, gin.H{"error": err.Error()})
+			// fmt.Println(err)
+			if IsRuleError(err) {
+				c.JSON(400, gin.H{"error": err.Error()})
+				return
+			}
+			c.JSON(500, gin.H{"error": "ups"})
 			return
 		}
-
 		c.JSON(201, gin.H{"message": "Created"})
 	})
 
@@ -48,18 +53,21 @@ func Router(g *gin.RouterGroup, db *gorm.DB) {
 
 	})
 	route.PUT("", func(c *gin.Context) {
-		var request []RequestReturnBorrowing
+		var request RequestReturnBorrowing
 		if err := c.ShouldBindJSON(&request); err != nil {
-			c.JSON(400, gin.H{"message": "ups"})
+			c.JSON(400, gin.H{"message": err.Error()})
 			return
 		}
 
-		err := service_.ReturnBorrowing(request)
+		message, err := service_.ReturnBorrowing(request)
 		if err != nil {
 			c.JSON(500, gin.H{"message": "ups"})
 			return
 		}
-		c.JSON(201, gin.H{"message": "updated"})
+		c.JSON(201, gin.H{
+			"message": "updated",
+			"warning": message,
+		})
 
 	})
 }
